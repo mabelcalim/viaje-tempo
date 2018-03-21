@@ -85,7 +85,7 @@
     </div>
     <div id="directions-panel"></div>
     </div>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js">
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&sensor=false&libraries=weather">
 </script>
 <script>
 
@@ -176,56 +176,6 @@
     var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
-
-    var casa = {lat: -22.666809, lng: -45.00437};
-    var bauru = {lat: -22.347106, lng: -49.061366};
-    var balneario = {lat: -26.993094, lng: -48.635628};
-    var sampa = {lat: -23.524716, lng: -46.709358};
-    var image = '/users/calim/Desktop/gurizada.png'
-    var i_bauru = '/users/calim/Desktop/bauru.png'
-    var nai = '/users/calim/Desktop/NaieThiago.png'
-    var lolla = '/users/calim/Desktop/lolla.png'
-    /*var image ='file:///Users/calim/Desktop/WebDATA/GoogleMaps/test3.html'*/
-    var marker = new google.maps.Marker({
-      position: bauru,
-      map: map,
-      icon: i_bauru,
-      title: 'Casa dos gordins'
-    });
-    var marker = new google.maps.Marker({
-      position: sampa,
-      map: map,
-      icon: lolla,
-      title: 'Casa da Lolla'
-    });
-    var marker = new google.maps.Marker({
-      position: balneario,
-      map: map,
-      icon: nai,
-      title: 'NaieThiago'
-    });
-    var marker = new google.maps.Marker({
-      position: casa,
-      map: map,
-      icon: image,
-      title: 'Nossa casa'
-    });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-
-
-
-
-    /*var casas = [
-      ['Cachapau', -22.666809,  -45.00437, 4],
-      ['Bauru', -22.347106, -49.061366, 5],
-      ['Sampa', -23.524716, -46.709358, 3],
-      ['Balneário Camboriú', -26.993094, -48.635628, 2],
-      ['Rio Grande', -32.299886, -52.446547, 1]
-    ];*/
-
-
 
 
     // Add interaction listeners to make weather requests
