@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>viaje+tempo</title>
+    <title>Viagem-app</title>
     <style>
       #right-panel {
         font-family: 'Roboto','sans-serif';
@@ -85,7 +85,7 @@
     </div>
     <div id="directions-panel"></div>
     </div>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&sensor=false&libraries=weather">
 </script>
 <script>
 
@@ -158,6 +158,24 @@
         }
       })
     };
+
+    // markers
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Nossa casa</h1>'+
+        '<div id="bodyContent">'+
+        '<p><b>Nossa Casa </b> : nós e a  <b>gurizada</b> estamos também ' +
+        'no youtube e no blogger '+
+        '<p>Acesse: rep-gororoba,<a href="http://rep-gororoba.blogspot.com.br/">'+
+        'http://rep-gororoba.blogspot.com.br/</a> '+
+        '(last visited March 8, 2018).</p>'+
+        '</div>'+
+        '</div>';
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
 
 
     // Add interaction listeners to make weather requests
@@ -297,10 +315,11 @@
 
 </script>
 </head>
+<body>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&callback=initialize">
+  </script>
 
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&callback=initialize">
-</script>
 
 </body>
 </html>
