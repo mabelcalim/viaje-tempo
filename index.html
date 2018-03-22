@@ -85,7 +85,7 @@
     </div>
     <div id="directions-panel"></div>
     </div>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&sensor=false&libraries=weather">
 </script>
 <script>
 
@@ -93,7 +93,7 @@
   var geoJSON;
   var request;
   var gettingData = false;
-  var openWeatherMapKey = "55e69ddff10b236d2e648328e433b8e5"
+  var openWeatherMapKey = "96d6292aba5417927f552d0ded7d96c3"
 
   function initialize() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -159,6 +159,24 @@
       })
     };
 
+    // markers
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Nossa casa</h1>'+
+        '<div id="bodyContent">'+
+        '<p><b>Nossa Casa </b> : nós e a  <b>gurizada</b> estamos também ' +
+        'no youtube e no blogger '+
+        '<p>Acesse: rep-gororoba,<a href="http://rep-gororoba.blogspot.com.br/">'+
+        'http://rep-gororoba.blogspot.com.br/</a> '+
+        '(last visited March 8, 2018).</p>'+
+        '</div>'+
+        '</div>';
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
 
     // Add interaction listeners to make weather requests
     google.maps.event.addListener(map, 'idle', checkIfDataRequested);
@@ -204,17 +222,17 @@
 
   // Make the weather request
   var getWeather = function(northLat, eastLng, southLat, westLng) {
-  gettingData = true;
-  var requestString = "http://api.openweathermap.org/data/2.5/box/city?bbox="
+    gettingData = true;
+    var requestString = "http://api.openweathermap.org/data/2.5/box/city?bbox="
                         + westLng + "," + northLat + "," //left top
                         + eastLng + "," + southLat + "," //right bottom
                         + map.getZoom()
                         + "&cluster=yes&format=json"
-                        + "&APPID=96d6292aba5417927f552d0ded7d96c3";
-  request = new XMLHttpRequest();
-  request.onload = proccessResults;
-  request.open("get", requestString, true);
-  request.send();
+                        + "&APPID=55e69ddff10b236d2e648328e433b8e5" ;
+    request = new XMLHttpRequest();
+    request.onload = proccessResults;
+    request.open("get", requestString, true);
+    request.send();
   };
 
   // Take the JSON results and proccess them
@@ -287,7 +305,7 @@
     map.data.forEach(function(feature) {
       map.data.remove(feature);
     });
-  };
+  }
 
   google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -299,7 +317,7 @@
 </head>
 <body>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&callback=initialize">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&callback=initMap">
 </script>
 
 </body>
