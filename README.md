@@ -1,4 +1,4 @@
-![icon|10X10 20%](https://github.com/mabelcalim/viajemaistempo/blob/master/icon.png)
+![icon|10X10 20%](https://github.com/mabelcalim/viajemaistempo/blob/master/icon.png=10X10)
 viaje+tempo
 =====
 Viaje+tempo (travel+weather or travel a lot) it's a new app based on [Google API](https://developers.google.com/apis-explorer/) and [openWeather API](https://openweathermap.org/). 
