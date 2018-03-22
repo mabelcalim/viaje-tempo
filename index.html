@@ -54,38 +54,36 @@
     <div id="right-panel">
     <div>
     <b>Start:</b>
-    <select id="start">
-      <option value="Cachoeira Paulista">Cachoeira Paulista, SP</option>
-      <option value="São Paulo">São Paulo, SP</option>
-      <option value="Bauru">Bauru, SP</option>
-      <option value="Rio Grande, RS">Rio Grande, RS</option>
+    <input id="origin-input"  type="text"
+        placeholder="Enter an origin location">
     </select>
     <br>
     <b>Waypoints:</b> <br>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
     <select multiple id="waypoints">
-      <option value="São Paulo, SP">São Paulo, SP</option>
-      <option value="Botucatu, SP">Botucatu, SP</option>
-      <option value="Jaú, SP">Jaú, SP</option>
-      <option value="Curitiba,PR">Curitiba,PR</option>
-      <option value="Balneario Camboriu, SC">Balneario Camboriu, SC</option>
-      <option value="Caxias do Sul, RS">Caxias do Sul, RS</option>
-      <option value="Porto Alegre, RS">Porto Alegre, RS</option>
+      <option value="Rodovia Carvalho Pinto (SP-070)">Rodovia Carvalho Pinto (SP-070)</option>
+      <option value="Rodovia Castelo Branco (SP-280)">Rodovia Castelo Branco (SP-280)</option>
+      <option value="Rodovia dos Tamoios (SP-099)">Rodovia dos Tamoios (SP-099)</option>
+      <option value="Rodovia Dom PedroI (SP-065)">Rodovia Dom PedroI(SP-065)</option>
+      <option value="Rodovia Fernão Dias (BR-381)">Rodovia Fernão Dias (BR-381)</option>
+      <option value="Rodoanel Mário Covas (SP-021)">Rodoanel Mário Covas(SP-021)</option>
+      <option value="Rodoanel Mário Covas (SP-021)">Rodoanel Mário Covas(SP-021)</option>
+      <option value="Rodovia Presidente Dutra (SP-060)">Rodovia Presidente Dutra (SP-060)</option>
+      <option value="Rodovia Marechal Rondon (SP-300)">Rodovia Marechal Rondon (SP-300)</option>
+      <option value="RS-122">RS-122</option>
+      <option value="BR-101 Florianópolis">BR-101 Florianópolis</option>
     </select>
     <br>
     <b>End:</b>
-    <select id="end">
-      <option value="Bauru, SP">Bauru, SP</option>
-      <option value="São Paulo, SP">São Paulo, SP</option>
-      <option value="Cachoeira Paulista">Cachoeira Paulista, SP</option>
-      <option value="Rio Grande, RS">Rio Grande, RS</option>
+    <input id="destination-input"  type="text"
+        placeholder="Enter a destination location">
     </select>
     <br>
       <input type="submit" id="submit">
     </div>
     <div id="directions-panel"></div>
     </div>
-    <script type="text/javascript" 
+    <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs&sensor=false&libraries=weather">
     </script>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
@@ -95,7 +93,7 @@
   var geoJSON;
   var request;
   var gettingData = false;
-  var openWeatherMapKey = "55e69ddff10b236d2e648328e433b8e5"
+  
 
   function initialize() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -134,8 +132,8 @@
       }
 
       directionsService.route({
-        origin: document.getElementById('start').value,
-        destination: document.getElementById('end').value,
+        origin: document.getElementById('origin-input').value,
+        destination: document.getElementById('destination-input').value,
         waypoints: waypts,
         optimizeWaypoints: true,
         travelMode: 'DRIVING',
@@ -150,8 +148,7 @@
             var routeSegment = i + 1;
             summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
                 '</b><br>';
-            summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-            summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+
             summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
             summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
           }
@@ -292,7 +289,84 @@
   };
 
   google.maps.event.addDomListener(window, 'load', initialize);
+  /**
+   * @constructor
+  */
+ function AutocompleteDirectionsHandler(map) {
+   this.map = map;
+   this.originPlaceId = null;
+   this.destinationPlaceId = null;
+   this.travelMode = 'DRIVING';
+   var originInput = document.getElementById('origin-input');
+   var destinationInput = document.getElementById('destination-input');
 
+   this.directionsService = new google.maps.DirectionsService;
+   this.directionsDisplay = new google.maps.DirectionsRenderer;
+   this.directionsDisplay.setMap(map);
+
+   var originAutocomplete = new google.maps.places.Autocomplete(
+       originInput, {placeIdOnly: true});
+   var destinationAutocomplete = new google.maps.places.Autocomplete(
+       destinationInput, {placeIdOnly: true});
+
+
+
+   this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+   this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+   this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+   this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+
+ }
+
+ // Sets a listener on a radio button to change the filter type on Places
+ // Autocomplete.
+ AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+   var radioButton = document.getElementById(id);
+   var me = this;
+   radioButton.addEventListener('click', function() {
+     me.travelMode = mode;
+     me.route();
+   });
+ };
+
+ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+   var me = this;
+   autocomplete.bindTo('bounds', this.map);
+   autocomplete.addListener('place_changed', function() {
+     var place = autocomplete.getPlace();
+     if (!place.place_id) {
+       window.alert("Please select an option from the dropdown list.");
+       return;
+     }
+     if (mode === 'ORIG') {
+       me.originPlaceId = place.place_id;
+     } else {
+       me.destinationPlaceId = place.place_id;
+     }
+     me.route();
+   });
+
+ };
+
+ AutocompleteDirectionsHandler.prototype.route = function() {
+   if (!this.originPlaceId || !this.destinationPlaceId) {
+     return;
+   }
+   var me = this;
+
+   this.directionsService.route({
+     origin: {'placeId': this.originPlaceId},
+     destination: {'placeId': this.destinationPlaceId},
+
+   }, function(response, status) {
+     if (status === 'OK') {
+       me.directionsDisplay.setDirections(response);
+     } else {
+       window.alert('Directions request failed due to ' + status);
+     }
+   });
+ }
 
 
 
@@ -304,4 +378,3 @@
 <div id="map"></div>
 </body>
 </html>
-
