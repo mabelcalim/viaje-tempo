@@ -6,4 +6,4 @@ This app was built to monitor my husband and brothers-in-law on a motorcycle tri
 
 I created this app based on my husband idea, and we hope it'll be useful for you too
 
-![ScreenShot](https://github.com/mabelcalim/viaje-tempo/blob/master/icon.png = 7X5)
+![ScreenShot](https://github.com/mabelcalim/viaje-tempo/blob/master/icon.png)
