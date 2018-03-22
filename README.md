@@ -1,5 +1,4 @@
-![icon|512x397](https://github.com/mabelcalim/viajemaistempo/blob/master/icon.png){:height="50%" width="50%"}
-
+![icon|512x397 20%](https://github.com/mabelcalim/viajemaistempo/blob/master/icon.png)
 viaje+tempo
 =====
 Viaje+tempo (travel+weather or travel a lot) it's a new app based on [Google API](https://developers.google.com/apis-explorer/) and [openWeather API](https://openweathermap.org/). 
