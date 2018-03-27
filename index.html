@@ -3,6 +3,7 @@
   <head>
     <title>viaje+tempo</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -81,13 +82,15 @@
       <input type="radio" name="type" id="changemode-driving" checked="checked">
       <label for="changemode-driving">Driving</label>
     </div>
-
+   <script src="_scripts/locationpicker.jquery.js"></script>
     <div class="container">
         <hr>
         <p>&copy; 2018 - <a href="https://github.com/mabelcalim/">Mabel Calim Costa</a> - View source on <a href="https://github.com/mabelcalim/viajemaistempo">Github</a></p>
     </div>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js">
+
   </script>
+
     <script>
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
@@ -201,7 +204,6 @@
         AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
           var radioButton = document.getElementById(id);
           var me = this;
-
           radioButton.addEventListener('click', function() {
             me.travelMode = mode;
             me.route();
