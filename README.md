@@ -9,4 +9,4 @@ I created this app based on my husband idea, and we hope it'll be useful for you
 
 Check this app n web: https://mabelcalim.github.io/viajemaistempo/
 
-![Alt Text](https://github.com/mabelcalim/viajemaistempo/blob/master/example.mov)
+![Alt Text](https://github.com/mabelcalim/viajemaistempo/blob/master/example.gif)
